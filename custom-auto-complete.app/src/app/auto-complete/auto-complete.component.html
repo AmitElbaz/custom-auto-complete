@@ -1,0 +1,17 @@
+<div id="warper" class="center container" (click)="onClickOutside($event)">
+  <input #inputs [(ngModel)]="filterCity" style="padding-bottom: 3px" type="text"  (input)="onFilterCity()" (click)="onClickDropDown()"
+  placeholder="Search city by name" >
+
+  <div class="center drop-down-box" [hidden]="!isOpenDropDown">
+    <div *ngFor="let city of filterdCities">
+        <div class="cursor" [innerHTML]="getHighlightText(city.name)" (click)="onSelectCity(city)"
+          onmouseover="this.style.background='#012168';this.style.color='white'" onmouseout="this.style.background='white';this.style.color='black'" >
+        </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+

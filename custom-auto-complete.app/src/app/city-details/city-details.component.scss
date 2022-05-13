@@ -1,0 +1,41 @@
+label{
+  display: block;
+  color: black;
+}
+
+b{
+  padding: 0px 0px 0px 8px;
+}
+
+div{
+  text-align: left;
+}
+
+
+.details{
+  box-shadow: 0 2px 4px -1px #0003, 0 4px 5px 0 #00000024, 0 1px 10px 0 #0000001f;
+  background-color: rgba(0,151, 169, 0.1);
+  padding: 0px 0px 10px 0px;
+  width:500px;
+}
+
+.details-title{
+  color: black;
+  font-size: 20px;
+  font-weight: 600;
+  padding: 10px 0px 10px 0px;
+}
+
+.card {
+  border: 0;
+  margin-bottom: 30px;
+  margin-top: 30px;
+  border-radius: 6px;
+  color: rgba(0,0,0,.87);
+  background: #fff;
+  width:500px;
+  -webkit-box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+  box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+  background-color: rgba(0,151, 169, 0.1);
+  padding: 0px 0px 10px 0px;
+}
