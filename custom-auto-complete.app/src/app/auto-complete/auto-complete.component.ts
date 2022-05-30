@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { debounceTime, Subject } from 'rxjs';
 import { city } from '../models/city.model';
 import { DataService } from '../services/data.service';
 
@@ -12,28 +13,37 @@ export class AutoCompleteComponent implements OnInit {
   constructor(private dataService:DataService) { }
 
   @Output() emitCity = new EventEmitter<city>();
+  subject: Subject<any> = new Subject();
   filterdCities:Array<city>
   toHighlight:string = ""; filterCity:string = "";
   isOpenDropDown:boolean = false;
-  time: number = 0;
-  interval;
+
 
   ngOnInit(): void {
+
+    // Subscribe to the subject, which is triggered with each keyup
+    // When the debounce time has passed, we call the api for data
+    this.subject.pipe(debounceTime(500)).subscribe(() => {
+      if (this.filterCity !== ""){
+        this.dataService.getFilterdCities(this.filterCity).subscribe((data: Array<city>) => {
+          this.filterdCities = data;
+          this.onClickDropDown()
+        });
+      }}
+    );
   }
 
+
   onFilterCity(): void{
-    if (this.filterCity !== ""){
-      if (this.time < 1)
-        this.startTimer()
-      else
-        this.resetTimer()
-    }
+    if (this.filterCity !== "")
+      this.subject.next("");
     else
       this.filterdCities = []
   }
 
   getHighlightText(city:string): string{
-    let highlightText = city.replaceAll(this.capitalizeFirstLetter(this.filterCity),"<b>" + this.capitalizeFirstLetter(this.filterCity) + "</b>")
+    let highlightText = this.capitalizeFirstLetter(this.filterCity);
+    highlightText = city.replaceAll(highlightText,"<b>" + highlightText + "</b>")
     return highlightText;
   }
 
@@ -51,38 +61,13 @@ export class AutoCompleteComponent implements OnInit {
       this.isOpenDropDown = true
     else
       this.isOpenDropDown = false
-  } 
+  }
 
   onClickOutside(event): void{
     if(event.target.id === "warper")
       this.isOpenDropDown = false
   }
 
-
-
-  private startTimer() {
-   this.resetTimer()
-    this.interval = setInterval(() => {
-
-      if (this.time >= 0)
-        this.time++;
-
-      if (this.time > 1){
-        this.resetTimer()
-        this.dataService.getFilterdCities(this.filterCity).subscribe((data: Array<city>) => {
-          this.filterdCities = data;
-          this.onClickDropDown()
-        });
-      }
-
-    }, 400);
-  }
-
-
-  private resetTimer() {
-    this.time = 0
-    clearInterval(this.interval);
-  }
 
   private capitalizeFirstLetter(str:string){
     if (str.includes(" ")){

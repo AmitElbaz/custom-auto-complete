@@ -1,5 +1,5 @@
 <div id="warper" class="center container" (click)="onClickOutside($event)">
-  <input #inputs [(ngModel)]="filterCity" style="padding-bottom: 3px" type="text"  (input)="onFilterCity()" (click)="onClickDropDown()"
+  <input id="searchCity" [(ngModel)]="filterCity" style="padding-bottom: 3px" type="text"  (input)="onFilterCity()" (click)="onClickDropDown()"
   placeholder="Search city by name" >
 
   <div class="center drop-down-box" [hidden]="!isOpenDropDown">
